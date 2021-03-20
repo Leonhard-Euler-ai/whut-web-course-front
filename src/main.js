@@ -3,10 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
-import locale from 'element-ui/lib/locale/lang/en'
 import './styles.scss'
 
-Vue.use(ElementUI, { locale })
+Vue.use(ElementUI)
 
 Vue.config.productionTip = false
 
