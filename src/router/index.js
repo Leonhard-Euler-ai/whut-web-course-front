@@ -37,6 +37,13 @@ const routes = [
         component: () => import("views/main/mainViewComps/BodyView/ArticleManagementView")
       }
     ]
+  },
+  {
+    path: '/notfound',
+    component: () => import('components/NotFound')
+  }, {
+    path: '/*',
+    component: () => import('components/NotFound')
   }
 ]
 
