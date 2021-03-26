@@ -50,6 +50,8 @@
 <script>
 import EditDialogView from "views/main/mainViewComps/BodyView/EditDialogView";
 
+import {requestGetAllUsers,requestDeleteUser,requestUpdateUserInfo} from "network/api";
+
 export default {
   name: "ManagementView",
   components: {
@@ -105,13 +107,24 @@ export default {
       }]
     }
   },
+  created() {
+    requestGetAllUsers().then(axiosRes => {
+      if (axiosRes.data.code === 200) {
+        this.tableData = axiosRes.data.data
+        console.log("返回的表数据"+this.tableData);
+        this.$message.success(axiosRes.data.message)
+      } else {
+        this.$message.error(axiosRes.data.message)
+      }
+    })
+  },
   methods: {
     search() {
       for (let i = 0; i < this.tableData.length; i++) {
         // 全名匹配
         // if(this.searchContent===this.tableData[i].name)
         // 模糊匹配
-        if (this.tableData[i].name.indexOf(this.searchContent)!==-1) {
+        if (this.tableData[i].name.indexOf(this.searchContent) !== -1) {
           // 参数为行的obj对象,而不是索引
           this.$refs.table.setCurrentRow(this.tableData[i]);
           return;
@@ -147,15 +160,24 @@ export default {
         center: true
       }).then(() => {
         // 网络请求
-        //====================
-        //成功时的操作
+        requestDeleteUser(rowData.name).then(axiosRes=>{
+          console.log("删除时的返回体："+axiosRes);
+          if (axiosRes.data.code === 200) {
+            //成功时的操作
+            this.tableData.splice(rowIndex, 1)
+            this.$message.success('删除成功!');
+          }else{
+            this.$message.error(axiosRes.data.message)
+          }
+        })
+        /*//成功时的操作
         this.tableData.splice(rowIndex, 1)
         this.$message({
           type: 'success',
           message: '删除成功!'
         });
 
-        //失败时的操作
+        //失败时的操作*/
 
       }).catch(() => {
       });
@@ -170,9 +192,18 @@ export default {
       this.dialogFormVisible = false;
 
       //发送网络请求后台修改成功后前段再修改
-      // ============================
-      //修改表中数据
-      this.tableData.splice(this.editRowIndex, 1, JSON.parse(JSON.stringify(this.newUserInfo)))
+      requestUpdateUserInfo(this.newUserInfo).then(axiosRes=>{
+        console.log("更改用户信息的返回体："+axiosRes);
+        if (axiosRes.data.code === 200) {
+          //成功时的操作
+          this.tableData.splice(this.editRowIndex, 1, JSON.parse(JSON.stringify(this.newUserInfo)))
+          this.$message.success('更新成功!');
+        }else{
+          this.$message.error(axiosRes.data.message)
+        }
+      })
+      // //修改表中数据
+      // this.tableData.splice(this.editRowIndex, 1, JSON.parse(JSON.stringify(this.newUserInfo)))
     },
     cancelEditForm() {
       this.dialogFormVisible = false;

@@ -3,11 +3,11 @@
     <el-form :model="userInfo">
       <el-form-item>
         <el-input disabled v-model="userInfo.name">
-          <template #prepend>用户名</template>
+          <template #prepend>姓名</template>
         </el-input>
       </el-form-item>
       <el-form-item>
-        <el-input v-model="userInfo.password">
+        <el-input v-model="userInfo.password" disabled>
           <template #prepend>密码</template>
         </el-input>
       </el-form-item>

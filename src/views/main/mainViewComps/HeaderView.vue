@@ -1,7 +1,7 @@
 <template>
   <div class="header">
 
-    <div class="back-icon-wrapper" >
+    <div class="back-icon-wrapper">
       <i class="el-icon-d-arrow-left" @click="headerCompClick"></i>
     </div>
 
@@ -25,8 +25,8 @@
 
     <div class="dropdown-wrapper">
       <el-dropdown @command="handleCommand">
-        <span class="el-dropdown-link">
-          用户名
+        <span class="border-user-info">
+          {{username}}
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <template #dropdown>
@@ -44,13 +44,18 @@
 <script>
 export default {
   name: "HeaderView",
+  data() {
+    return {
+      username: this.$store.state.userInfo.nickname
+    }
+  },
   methods: {
     headerCompClick() {
       this.$message.info("HeaderCompClickEvent");
     },
-    handleCommand(command){
+    handleCommand(command) {
       this.$message.success(command);
-      if(command==="logout"){
+      if (command === "logout") {
         window.sessionStorage.clear();
         this.$router.replace("/login");
       }
@@ -119,5 +124,9 @@ export default {
 .dropdown-wrapper {
   width: 80px;
   cursor: pointer;
+}
+
+.border-user-info{
+  color: #fff;
 }
 </style>

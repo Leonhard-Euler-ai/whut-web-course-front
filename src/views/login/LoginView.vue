@@ -53,31 +53,33 @@ export default {
         ],
         password: [
           {required: true, message: '请输入密码', trigger: 'blur'},
-          {min: 8, max: 20, message: '长度在 8 到 20 个字符', trigger: 'blur'}
+          {min: 6, max: 20, message: '长度在 8 到 20 个字符', trigger: 'blur'}
         ]
       }
     }
   },
   methods: {
     login() {
-      window.sessionStorage.setItem("authorization", "success")
+      /*window.sessionStorage.setItem("authorization", "success")
       let userInfo = {
-        nickname: 'Leonhard Euler',
+        nickname: '欧拉',
         mail: '873406454@qq.com',
         birthday: '2000-11-10',
         balance: '20000'
       };
       this.$store.dispatch('setUserInfo', userInfo)
-      this.$router.push('/main')
-      /*requestLogin(this.username, this.password).then(axiosRes=>{
+      this.$router.push('/main')*/
+      requestLogin(this.loginForm.username, this.loginForm.password).then(axiosRes=>{
         if (axiosRes.data.code === 200) {
            window.sessionStorage.setItem("authorization","success")
+          console.log(axiosRes.data.data);
+          this.$store.dispatch('setUserInfo', axiosRes.data.data)
             this.$router.push('/main')
             this.$message.success(axiosRes.data.message)
         }else{
           this.$message.error(axiosRes.data.message)
         }
-      })*/
+      })
     },
     register() {
       this.$message.success("注册新用户")

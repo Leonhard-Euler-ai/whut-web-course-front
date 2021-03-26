@@ -1,4 +1,6 @@
 import axios from 'axios'
+import {Message} from 'element-ui';
+
 
 axios.defaults.withCredentials = true
 
@@ -23,7 +25,10 @@ export function request(config) {
   instance.interceptors.response.use(res => {
     return res;
   }, err => {
-    console.log("响应拦截器拦截到的err"+err);
+    Message.error({
+      showClose: true,
+      message: err.response ? err.response.data.message : '网络错误'
+    });
   })
 
   return instance(config)
