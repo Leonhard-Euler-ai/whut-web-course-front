@@ -10,7 +10,17 @@ const routes = [
   },
   {
     path: '/login',
-    component: () => import("views/login/LoginView")
+    component: () => import("views/login/LoginView"),
+    children: [
+      {
+        path: '',
+        component: () => import("views/login/LoginViewComps/LoginPart"),
+      },
+      {
+        path: 'toRegister',
+        component: () => import("views/login/LoginViewComps/RegisterView"),
+      }
+    ]
   },
   {
     path: '/main',
@@ -55,7 +65,7 @@ const router = new VueRouter({
 
 // 全局前置导航守卫
 router.beforeEach(((to, from, next) => {
-  if (to.path === '/login') {
+  if (to.path === '/login'||to.path === '/login/toRegister'||to.path === '/findPassword') {
     return next()
   }
   if (!(window.sessionStorage.getItem("authorization") === "success")) {

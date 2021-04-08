@@ -41,3 +41,26 @@ export function requestUpdateUserInfo(newUserInfo) {
     }
   })
 }
+
+export function requestSendPhoneVerCode(mobile) {
+  return request({
+    method:"post",
+    url: '/api/sendVerCode',
+    params:{
+      mobile
+    }
+  })
+}
+
+export function requestRegister(username,mobile,password,verCode) {
+  return request({
+    method:"post",
+    url: '/register',
+    params:{
+      username,
+      mobile,
+      password,
+      verCode,
+    }
+  })
+}

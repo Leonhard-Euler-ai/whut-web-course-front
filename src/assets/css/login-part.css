@@ -1,0 +1,116 @@
+.login {
+  width: 50%;
+  height: 100%;
+  min-height: 500px;
+  background: linear-gradient(45deg, #9a444e, #e06267);
+  position: relative;
+  float: right;
+}
+
+.login-title {
+  width: 60px;
+  height: 30px;
+  margin: 10px auto;
+  color: #fff;
+  font-size: 23px;
+  font-weight: 600;
+  letter-spacing: 5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-title p {
+  height: 100%;
+  text-align: center;
+}
+
+.login-form {
+  width: 60%;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.el-icon-user {
+  transform: scale(1.5);
+  margin-left: 5px;
+}
+
+.icon-password {
+  margin-left: -3px;
+  margin-top: 3px;
+  transform: scale(1.1);
+}
+
+.form-item-remember-password {
+  margin-top: -4px;
+  margin-bottom: 12px;
+}
+
+.form-item-remember-password span {
+  color: #fff;
+}
+
+
+.forgottenPassword {
+  color: #dcc4c4;
+  margin-left: 145px;
+  cursor: pointer;
+}
+
+.button-login {
+  width: 100%;
+  color: #2189EA;
+  border-color: #b3d9d9;
+  background-color: #eab293;
+  font-size: 18px;
+}
+
+.user-register {
+  margin-left: 120px;
+  margin-top: -4px;
+  font-size: 14px;
+
+}
+
+.user-register span {
+  color: #f1e7e7;
+  cursor: pointer;
+}
+
+.login-by-other-ways {
+  margin-top: 20px;
+  position: relative;
+}
+
+
+.other-login-title::before, .other-login-title::after {
+  content: '';
+  display: inline-block;
+  width: 90px;
+  height: 1px;
+  border-bottom: 1px solid #e0e0e0;
+  position: absolute;
+  top: 50%;
+
+}
+
+.other-login-title::before {
+  margin-left: -90px;
+}
+
+.other-login-title {
+  margin-left: 90px;
+}
+
+.other-login-wrap {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.other-login-wrap img {
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+

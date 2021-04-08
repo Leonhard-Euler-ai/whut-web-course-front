@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
-import './styles.scss'
+import 'assets/css/styles.scss'
 
 Vue.use(ElementUI)
 
