@@ -64,3 +64,19 @@ export function requestRegister(username,mobile,password,verCode) {
     }
   })
 }
+
+export function requestOauthByGitHub() {
+  return request({
+    url: '/oauth/github',
+  })
+}
+
+export function postOauthInfoOfGitHub(authInfo){
+  return request({
+    url: '/oauth/github/authInfo',
+    params:{
+      code:authInfo.code,
+      state:authInfo.state
+    }
+  })
+}

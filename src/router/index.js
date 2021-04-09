@@ -23,6 +23,10 @@ const routes = [
     ]
   },
   {
+    path: '/oauth/github/callback',
+    component: () => import("views/login/LoginTransfer")
+  },
+  {
     path: '/main',
     component: () => import("views/main/MainView"),
     children: [
@@ -49,9 +53,14 @@ const routes = [
     ]
   },
   {
+    path: '/serverError',
+    component: () => import('components/ServerError')
+  },
+  {
     path: '/notfound',
     component: () => import('components/NotFound')
-  }, {
+  },
+  {
     path: '/*',
     component: () => import('components/NotFound')
   }
@@ -65,7 +74,10 @@ const router = new VueRouter({
 
 // 全局前置导航守卫
 router.beforeEach(((to, from, next) => {
-  if (to.path === '/login'||to.path === '/login/toRegister'||to.path === '/findPassword') {
+  if (to.path === '/login' || to.path === '/login/toRegister' || to.path === '/findPassword'
+    || to.path === '/oauth/github/callback' ){
+    // || to.fullPath.slice(1).split("?")[0]==='https://github.com/login/oauth/authorize') {
+    // console.log("2: "+to.fullPath.split("?")[0])
     return next()
   }
   if (!(window.sessionStorage.getItem("authorization") === "success")) {

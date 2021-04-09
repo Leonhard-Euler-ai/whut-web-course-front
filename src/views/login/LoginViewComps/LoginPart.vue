@@ -45,13 +45,14 @@
       <div class="other-login-wrap">
         <img src="~assets/img/QQ.png" @click="loginByQQ">
         <img src="~assets/img/wechat.png" @click="loginByWeChat">
+        <img src="~assets/img/github.png" @click="loginByGitHub">
       </div>
     </el-form>
   </div>
 </template>
 
 <script>
-import {requestLogin} from "network/api";
+import {requestLogin, requestOauthByGitHub} from "network/api";
 
 export default {
   name: "LoginView",
@@ -76,13 +77,13 @@ export default {
   },
   methods: {
     login() {
-      requestLogin(this.loginForm.username, this.loginForm.password).then(axiosRes=>{
+      requestLogin(this.loginForm.username, this.loginForm.password).then(axiosRes => {
         if (axiosRes.data.code === 200) {
-          window.sessionStorage.setItem("authorization","success")
+          window.sessionStorage.setItem("authorization", "success")
           this.$store.dispatch('setUserInfo', axiosRes.data.data)
           this.$router.push('/main')
           this.$message.success(axiosRes.data.message)
-        }else{
+        } else {
           this.$message.error(axiosRes.data.message)
         }
       })
@@ -94,11 +95,22 @@ export default {
     forgetPassword() {
       this.$message.success("忘记密码")
     },
-    loginByQQ() {
-      this.$message.success("QQ登录")
+    loginByGitHub() {
+      requestOauthByGitHub().then(axiosRes => {
+        if (axiosRes.data.code === 200) {
+          let redirectURL = axiosRes.data.data
+          console.log("axios收到的" + redirectURL)
+          window.location = redirectURL
+        } else {
+          this.$message.error(axiosRes.data.message)
+        }
+      })
     },
     loginByWeChat() {
-      this.$message.success("微信登录")
+      this.$message.success("微信第三方登录功能暂未开放")
+    },
+    loginByQQ() {
+      this.$message.success("QQ第三方登录功能暂未开放")
     }
   }
 }

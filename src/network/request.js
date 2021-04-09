@@ -25,6 +25,7 @@ export function request(config) {
   instance.interceptors.response.use(res => {
     return res;
   }, err => {
+    console.log(err);
     Message.error({
       showClose: true,
       message: err.response ? err.response.data.message : '网络错误'
