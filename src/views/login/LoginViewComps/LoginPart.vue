@@ -77,20 +77,19 @@ export default {
   },
   methods: {
     login() {
+      // window.sessionStorage.setItem("authorization", "success")
+      // this.$router.push('/main')
       requestLogin(this.loginForm.username, this.loginForm.password).then(axiosRes => {
         if (axiosRes.data.code === 200) {
           window.sessionStorage.setItem("authorization", "success")
           this.$store.dispatch('setUserInfo', axiosRes.data.data)
           this.$router.push('/main')
           this.$message.success(axiosRes.data.message)
-        } else {
-          this.$message.error(axiosRes.data.message)
         }
       })
     },
     registerUser() {
       this.$router.push("/login/toRegister")
-      this.$message.success("注册")
     },
     forgetPassword() {
       this.$message.success("忘记密码")
@@ -101,8 +100,6 @@ export default {
           let redirectURL = axiosRes.data.data
           console.log("axios收到的" + redirectURL)
           window.location = redirectURL
-        } else {
-          this.$message.error(axiosRes.data.message)
         }
       })
     },

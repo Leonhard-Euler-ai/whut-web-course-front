@@ -156,8 +156,6 @@ export default {
         if (axiosRes.data.code === 200) {
           this.$message.success(axiosRes.data.message)
           this.codeTextChange()
-        } else {
-          this.$message.error(axiosRes.data.message)
         }
       })
     },
@@ -170,8 +168,6 @@ export default {
           if (axiosRes.data.code === 200) {
             this.$message.success(axiosRes.data.message)
             this.$router.push("/login")
-          } else {
-            this.$message.error(axiosRes.data.message)
           }
         })
     }

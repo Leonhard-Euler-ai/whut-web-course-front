@@ -49,6 +49,10 @@ const routes = [
       {
         path: "article-management",
         component: () => import("views/main/mainViewComps/BodyView/ArticleManagementView")
+      },
+      {
+        path: "articles",
+        component: () => import("views/main/mainViewComps/BodyView/ArticleList")
       }
     ]
   },

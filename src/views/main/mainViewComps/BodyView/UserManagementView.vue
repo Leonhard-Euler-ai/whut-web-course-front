@@ -80,50 +80,19 @@ export default {
       editRowIndex: '',
 
       //表中数据
-      tableData: [{
-        name: '李航飞',
-        password: '123456',
-        mail: '873406454@qq.com',
-        birthday: '2016-05-02',
-        balance: '3000'
-      }, {
-        name: '曾昊宇',
-        password: '123456',
-        mail: '873406454@qq.com',
-        birthday: '2016-05-02',
-        balance: '4000'
-      }, {
-        name: '杨阜康',
-        password: '123456',
-        mail: '873406454@qq.com',
-        birthday: '2016-05-02',
-        balance: '8000'
-      }, {
-        name: '龚东东',
-        password: '123456',
-        mail: '873406454@qq.com',
-        birthday: '2016-05-02',
-        balance: '6000'
-      }]
+      tableData: []
     }
   },
   created() {
     requestGetAllUsers().then(axiosRes => {
       if (axiosRes.data.code === 200) {
         this.tableData = axiosRes.data.data
-        console.log("返回的表数据"+this.tableData);
-        this.$message.success(axiosRes.data.message)
-      } else {
-        this.$message.error(axiosRes.data.message)
       }
     })
   },
   methods: {
     search() {
       for (let i = 0; i < this.tableData.length; i++) {
-        // 全名匹配
-        // if(this.searchContent===this.tableData[i].name)
-        // 模糊匹配
         if (this.tableData[i].name.indexOf(this.searchContent) !== -1) {
           // 参数为行的obj对象,而不是索引
           this.$refs.table.setCurrentRow(this.tableData[i]);
@@ -133,14 +102,6 @@ export default {
       this.$message.warning("不存在该学生")
     },
     handleEdit(rowIndex, rowData) {
-      let newRowData = {
-        name: '范笑宇',
-        password: '123456',
-        mail: '873406454@qq.com',
-        birthday: '2016-05-02',
-        balance: '8000'
-      };
-
       this.editForm.name = rowData.name;
       this.editForm.password = rowData.password;
       this.editForm.mail = rowData.mail;
@@ -161,26 +122,12 @@ export default {
       }).then(() => {
         // 网络请求
         requestDeleteUser(rowData.name).then(axiosRes=>{
-          console.log("删除时的返回体："+axiosRes);
           if (axiosRes.data.code === 200) {
-            //成功时的操作
             this.tableData.splice(rowIndex, 1)
             this.$message.success('删除成功!');
-          }else{
-            this.$message.error(axiosRes.data.message)
           }
         })
-        /*//成功时的操作
-        this.tableData.splice(rowIndex, 1)
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        });
-
-        //失败时的操作*/
-
-      }).catch(() => {
-      });
+      }).catch(() => {});
     },
     changeUserInfo(userInfo) {
       //记录编辑后的数据
@@ -191,19 +138,13 @@ export default {
       this.newUserInfo.balance = userInfo.balance;
       this.dialogFormVisible = false;
 
-      //发送网络请求后台修改成功后前段再修改
+      //发送网络请求后台修改
       requestUpdateUserInfo(this.newUserInfo).then(axiosRes=>{
-        console.log("更改用户信息的返回体："+axiosRes);
         if (axiosRes.data.code === 200) {
-          //成功时的操作
           this.tableData.splice(this.editRowIndex, 1, JSON.parse(JSON.stringify(this.newUserInfo)))
           this.$message.success('更新成功!');
-        }else{
-          this.$message.error(axiosRes.data.message)
         }
       })
-      // //修改表中数据
-      // this.tableData.splice(this.editRowIndex, 1, JSON.parse(JSON.stringify(this.newUserInfo)))
     },
     cancelEditForm() {
       this.dialogFormVisible = false;

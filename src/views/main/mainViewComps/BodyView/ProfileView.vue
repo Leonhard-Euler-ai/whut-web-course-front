@@ -57,6 +57,9 @@
 
     <el-tab-pane label="密码修改">
       <el-form :model="ruleForm" class="change-password-form" :rules="rules" label-position="left" label-width="100px">
+        <el-form-item label="旧密码">
+          <el-input type="password" clearable v-model="ruleForm.oldPassword"></el-input>
+        </el-form-item>
         <el-form-item prop="newPassword" label="新密码">
           <el-input type="password" clearable v-model="ruleForm.newPassword"></el-input>
         </el-form-item>
@@ -76,6 +79,7 @@
 <script>
 import {formatDateToDateString} from 'utils/DateFormatUtil'
 import {mapGetters} from 'vuex'
+import {requestUpdateBaseInfo, requestUpdatePassword} from "network/api";
 
 export default {
   name: "ProfileView",
@@ -93,6 +97,7 @@ export default {
       },
       date: '',
       ruleForm: {
+        oldPassword:'',
         newPassword: '',
         confirmNewPassword: ''
       },
@@ -113,7 +118,7 @@ export default {
                 callback(new Error('两次输入密码不一致!'));
               } else {
                 this.submitDisabled = false;
-                this.callback();
+                callback();
               }
             },
             trigger: 'blur'
@@ -136,10 +141,19 @@ export default {
       this.notEditable = !this.notEditable;
     },
     userInfoSubmitButtonClick() {
-      this.$message.success("提交" + this.userBaseInfo.nickname + "修改的基本信息");
+      requestUpdateBaseInfo(this.userBaseInfo.nickname, this.userBaseInfo.mail, this.userBaseInfo.birthday).then(res => {
+        if (res.data.code === 200) {
+          this.$store.dispatch('setUserInfo', this.userBaseInfo)
+          this.$message.success(res.data.message)
+        }
+      })
     },
     changePasswordSubmitButtonClick() {
-      this.$message.success("修改" + this.userBaseInfo.nickname + "的密码");
+      requestUpdatePassword(this.ruleForm.oldPassword,this.ruleForm.confirmNewPassword).then(res => {
+        if (res.data.code === 200) {
+          this.$message.success(res.data.message)
+        }
+      })
     }
   }
 }

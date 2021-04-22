@@ -23,6 +23,12 @@ export function request(config) {
 
   //响应拦截器
   instance.interceptors.response.use(res => {
+    if(res.data.code!==200){
+      Message.error({
+        showClose: true,
+        message: res.data.message
+      });
+    }
     return res;
   }, err => {
     console.log(err);
