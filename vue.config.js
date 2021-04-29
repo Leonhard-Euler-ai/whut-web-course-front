@@ -9,5 +9,6 @@ module.exports = {
       .set('components', resolve('src/components'))
       .set('network', resolve('src/network'))
       .set('utils', resolve('src/utils'))
-  }
+  },
+  publicPath: process.env.NODE_ENV === 'production' ? './' : '/'
 }
