@@ -1,4 +1,6 @@
 # whut-web-course-front
+## 武理web技术课程大作业<XX后台管理系统> 此项目为前端 后端仓库为whut-web-course-backend 有问题可联系QQ：873406454 添加请备注来意
+
 
 ## Project setup
 ```
